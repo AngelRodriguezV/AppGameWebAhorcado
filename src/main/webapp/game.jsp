@@ -4,7 +4,7 @@
     Author     : veneg
 --%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="modelo.Partida"%>
+<%@page import="com.angelrv.modelo.Partida"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

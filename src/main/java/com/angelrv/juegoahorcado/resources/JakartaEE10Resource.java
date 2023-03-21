@@ -1,4 +1,4 @@
-package com.mycompany.juegoahorcado.resources;
+package com.angelrv.juegoahorcado.resources;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
