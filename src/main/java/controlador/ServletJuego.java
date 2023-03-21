@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import modelo.Palabra;
 import modelo.Partida;
 
 /**
@@ -41,9 +42,11 @@ public class ServletJuego extends HttpServlet {
             intentos = Integer.parseInt(request.getParameter("intentos"));
         }
         
-        Partida partida = new Partida();
+        Partida partida = (Partida)request.getAttribute("miPartida");
+                //new Partida();
         if (palabra == null || palabra.isEmpty()) {
-            palabra = "TEC";
+            Palabra p = new Palabra();
+            palabra = p.getPalabra();
             partida = new Partida(palabra, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         }
         else {
@@ -63,7 +66,7 @@ public class ServletJuego extends HttpServlet {
         else if (partida.asertoPalabra()) {
             // Win
             req = request.getRequestDispatcher("resultado.jsp");
-            request.setAttribute("resultado_partida", "Felicidades! Acertastes la palabra");
+            request.setAttribute("resultado_partida", "Acertastes la palabra :)");
         }
         else {
             req = request.getRequestDispatcher("game.jsp");
