@@ -1,1 +1,8 @@
-target/*
+target/classes/*
+target/endorsed/*
+target/generated-sources/*
+target/generated-test-sources/*
+target/juegoAhorcado-1.0-SNAPSHOT/*
+target/maven-archiver/*
+target/maven-status/*
+target/test-classes/*
