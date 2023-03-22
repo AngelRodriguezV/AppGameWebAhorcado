@@ -18,6 +18,7 @@
                 <h1 class="titulo">JUEGO DEL AHORCADO</h1>
             
                 <form action="ServletJuego" method="get">
+                    <input type="hidden" name="exe" value="start"/>
                     <button>INICIAR PARTIDA</button>
                 </form>
             </div>

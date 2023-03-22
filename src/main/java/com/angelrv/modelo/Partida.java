@@ -21,11 +21,11 @@ public class Partida implements Serializable {
     
     public Partida() {}
 
-    public Partida(String palabra, String diccionario) {
+    public Partida(String palabra) {
         this.palabra = palabra;
         letrasCorrectas = new ArrayList<Character>();
         letrasDisponibles = new ArrayList<Character>();
-        obtenerLetras(diccionario, letrasDisponibles);
+        obtenerLetras("ABCDEFGHIJKLMNOPQRSTUVWXYZ", letrasDisponibles);
         intentosFallidos = 0;
     }
 

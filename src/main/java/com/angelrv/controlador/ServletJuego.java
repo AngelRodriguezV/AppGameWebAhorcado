@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.angelrv.modelo.Palabra;
 import com.angelrv.modelo.Partida;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -33,43 +34,37 @@ public class ServletJuego extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String palabra = request.getParameter("palabra");
-        String letrasCorrectas = request.getParameter("letCorrectas");
-        String letrasDisponibres = request.getParameter("letDisponibles");
+        String exe = request.getParameter("exe");
         String letra = request.getParameter("letra");
-        int intentos = 0;
-        if (request.getParameter("intentos") != null) {
-            intentos = Integer.parseInt(request.getParameter("intentos"));
-        }
         
-        Partida partida = (Partida)request.getAttribute("miPartida");
-                //new Partida();
-        if (palabra == null || palabra.isEmpty()) {
+        HttpSession sesion = request.getSession(true);
+        Partida partida = (Partida)sesion.getAttribute("miPartida");
+        if (exe.equals("start")) {
             Palabra p = new Palabra();
-            palabra = p.getPalabra();
-            partida = new Partida(palabra, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        }
-        else {
-            partida = new Partida(palabra, intentos, letrasCorrectas, letrasDisponibres);
+            String palabra = p.getPalabra();
+            partida = new Partida(palabra);
         }
 
         if (letra != null) {
             partida.validarLetra(letra);
         }
+        
         RequestDispatcher req = null;
         // Casos del juego
-        if (partida.quedanIntentos()) {
+        if (partida.quedanIntentos() && exe.equals("stop")) {
             // Game Over
             req = request.getRequestDispatcher("resultado.jsp");
             request.setAttribute("resultado_partida", "Estuvistes cerca :')");
         }
-        else if (partida.asertoPalabra()) {
+        else if (partida.asertoPalabra() && exe.equals("stop")) {
             // Win
             req = request.getRequestDispatcher("resultado.jsp");
             request.setAttribute("resultado_partida", "Acertastes la palabra :)");
+            //request.setAttribute("exe", "stop");
         }
         else {
             req = request.getRequestDispatcher("game.jsp");
+            sesion.setAttribute("miPartida", partida);
             request.setAttribute("miPartida", partida);
         }
         

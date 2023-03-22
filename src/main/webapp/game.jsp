@@ -38,15 +38,22 @@
                     %>
                 </ul>
                 <br><hr>
-                <form action="ServletJuego" method="post">
-                    <input type="hidden" name="palabra" value="<%=partida.getPalabra()%>" />
-                    <input type="hidden" name="intentos" value="<%=partida.getIntentosFallidos()%>" />
-                    <input type="hidden" name="letCorrectas" value="<%=partida.getCadCorrectos()%>" />
-                    <input type="hidden" name="letDisponibles" value="<%=partida.getCadDisponibles()%>" />
+                <%boolean status = (partida.asertoPalabra() || partida.quedanIntentos());%>
+                <form action="ServletJuego" method="get">
+                    <input type="hidden" type="exe" name="exe" value="<%if(status){%>stop<%}else{%>runting<%}%>"/>
                 <%
                     for (Character c: partida.getLetrasDisponibles()) {
                 %>
-                    <input type="submit" name="letra" value="<%=c%>" class="button__letter"/>
+                    <input type="submit" name="letra" value="<%=c%>" class="button__letter" 
+                <%
+                    if (status) {%>disabled<%}
+                %>
+                    />
+                <%
+                    }
+                    if (status) {
+                %>
+                    <hr><button type="submit">TERMINAR PARTIDA</button>
                 <%
                     }
                 %>
